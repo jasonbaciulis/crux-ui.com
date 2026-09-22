@@ -18,6 +18,18 @@ order: 1
 php artisan crux:add collapsible
 ```
 
+## Directives
+
+The component is one Alpine directive from the `crux-ui` package, with the part name as its argument. Parts resolve their root through Alpine's scope chain, so a nested collapsible binds to the nearest root.
+
+| Directive | Effect |
+|---|---|
+| `x-collapsible` | Holds the open state. Reads `default-open`, `disabled` and `hidden-until-found`, scopes the generated ids, and dispatches `collapsible-change`. |
+| `x-collapsible:trigger` | Toggles on click, Enter and Space. Binds `aria-expanded` and `aria-controls`. A native `<button>` gets `type="button"` and `disabled`; anything else gets `role="button"`, `tabindex="0"` and `aria-disabled`. |
+| `x-collapsible:panel` | Shows and hides through `x-show`, or through `hidden="until-found"` when the root has `hidden-until-found`. Gets a generated `id` unless it already has one, and drops the server-rendered `hidden` on init. |
+
+The root needs a bare `x-data` unless an ancestor already has one, because Alpine's initial scan only visits `x-data` elements. Parts are not tied to specific components: the demo above puts `x-collapsible:trigger` on `<x-ui.button>`.
+
 ## Configuration
 
 Set these as plain attributes on the root.
