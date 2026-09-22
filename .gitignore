@@ -20,4 +20,5 @@ Homestead.yaml
 /.nova
 /.vscode
 /.zed
-/tmp/public/r
+/tmp
+/public/r
