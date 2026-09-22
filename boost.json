@@ -2,18 +2,22 @@
     "agents": [
         "claude_code",
         "cursor",
-        "opencode",
-        "junie",
-        "copilot",
-        "gemini",
-        "codex",
-        "amp"
+        "codex"
     ],
+    "cloud": true,
     "guidelines": true,
     "mcp": true,
-    "nightwatch_mcp": false,
+    "nightwatch": false,
+    "packages": [
+        "petebishwhip/laradocs",
+        "statamic/cms"
+    ],
     "sail": false,
     "skills": [
-        "laravel-best-practices"
+        "infer-conventions",
+        "laravel-best-practices",
+        "pest-testing",
+        "tailwindcss-development",
+        "laradocs-development"
     ]
 }
