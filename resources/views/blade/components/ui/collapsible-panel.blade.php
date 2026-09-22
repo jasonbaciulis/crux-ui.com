@@ -4,8 +4,7 @@
 <div
     x-collapsible:panel
     data-slot="collapsible-panel"
-    @if ($hidden === 'until-found') hidden="until-found" @elseif ($hidden) hidden @endif
-    {{ $attributes }}
+    {{ $attributes->merge(['hidden' => $hidden]) }}
 >
     {{ $slot }}
 </div>

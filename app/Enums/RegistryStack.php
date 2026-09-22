@@ -12,8 +12,8 @@ enum RegistryStack: string
     case Antlers = 'antlers';
 
     /**
-     * The docs app keeps Antlers under its own prefix because Statamic registers
-     * .antlers.html ahead of .blade.php in the view finder; the install target has no prefix.
+     * The docs app keeps each stack under its own prefix (Statamic registers .antlers.html
+     * ahead of .blade.php in the view finder); the install target has no prefix.
      */
     public function componentFile(string $name): RegistryFile
     {
@@ -27,10 +27,7 @@ enum RegistryStack: string
 
     private function sourceDirectory(): string
     {
-        return match ($this) {
-            self::Blade => 'views/components/ui',
-            self::Antlers => 'views/antlers/components/ui',
-        };
+        return 'views/'.$this->value.'/components/ui';
     }
 
     private function fileExtension(): string

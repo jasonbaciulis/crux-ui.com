@@ -1,5 +1,5 @@
 /* Crux UI theme: the shadcn CSS variables every registry component reads. Edit the values to restyle every component at once. */
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
 
 :root {
     --radius: 0.625rem;
@@ -26,7 +26,7 @@
     --surface-foreground: var(--foreground);
 }
 
-.dark {
+[data-theme='dark'] {
     --background: oklch(0.145 0 0);
     --foreground: oklch(0.985 0 0);
     --card: oklch(0.205 0 0);
@@ -78,11 +78,4 @@
     --radius-lg: var(--radius);
     --radius-xl: calc(var(--radius) + 4px);
     --radius-2xl: calc(var(--radius) + 8px);
-}
-
-/* shadcn ships cn-* classes as opt-in styling hooks; this mirrors ui.shadcn.com's globals.css */
-@layer base {
-    .cn-font-heading {
-        @apply font-heading;
-    }
 }

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\File;
 
 it('renders every ui component with its data-slot and slot content', function (): void {
-    $names = collect(File::files(resource_path('views/components/ui')))
+    $names = collect(File::files(resource_path('views/blade/components/ui')))
         ->map(fn ($file): string => str_replace('.blade.php', '', $file->getFilename()));
 
     expect($names)->not->toBeEmpty();

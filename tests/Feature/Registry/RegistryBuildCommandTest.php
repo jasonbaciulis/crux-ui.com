@@ -41,10 +41,10 @@ it('builds every blade item from the component tree', function (): void {
         ->and($collapsible['docs'])->toContain('Alpine.plugin(CruxUI)')
         ->and($collapsible['files'])->toHaveCount(3)
         ->and($collapsible['files'][0])->toMatchArray([
-            'path' => 'views/components/ui/collapsible.blade.php',
+            'path' => 'views/blade/components/ui/collapsible.blade.php',
             'type' => 'registry:file',
             'target' => 'resources/views/components/ui/collapsible.blade.php',
-            'content' => File::get(resource_path('views/components/ui/collapsible.blade.php')),
+            'content' => File::get(resource_path('views/blade/components/ui/collapsible.blade.php')),
         ]);
 });
 

@@ -9,34 +9,14 @@ order: 1
 
 <x-demo name="collapsible" />
 
-<x-demo-source name="collapsible" />
-
+<x-demo-source name="collapsible" stack="blade" />
 <x-demo-source name="collapsible" stack="antlers" />
-
-```html tab:HTML
-<div x-data x-collapsible>
-    <button x-collapsible:trigger>Product details</button>
-    <div x-collapsible:panel hidden>
-        This panel can be expanded or collapsed to reveal additional content.
-    </div>
-</div>
-```
 
 ## Installation
 
 ```bash
 php artisan crux:add collapsible
 ```
-
-## Anatomy
-
-| Blade | Antlers | Directive | Renders |
-|---|---|---|---|
-| `<x-ui.collapsible>` | `{{ partial:components/ui/collapsible }}` | `x-collapsible` | The root. Holds the open state and pairs the directive with a bare `x-data`. |
-| `<x-ui.collapsible-trigger>` | `{{ partial:components/ui/collapsible-trigger }}` | `x-collapsible:trigger` | A `<button>` that toggles the panel. Any element with the directive works, so a button with `x-collapsible:trigger` is the common form. |
-| `<x-ui.collapsible-panel>` | `{{ partial:components/ui/collapsible-panel }}` | `x-collapsible:panel` | The content. Ships `hidden` so a closed panel cannot flash before Alpine starts. |
-
-Antlers partials take `class` and `attrs` parameters. `attrs` is a raw attribute string, so `attrs="x-collapsible:trigger"` on the button partial makes it the trigger.
 
 ## Configuration
 
