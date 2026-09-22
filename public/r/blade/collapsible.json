@@ -1,0 +1,34 @@
+{
+    "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+    "name": "collapsible",
+    "type": "registry:item",
+    "title": "Collapsible",
+    "description": "A panel controlled by a button.",
+    "dependencies": [
+        "crux-ui"
+    ],
+    "registryDependencies": [
+        "@crux/theme"
+    ],
+    "docs": "Behavior comes from the Crux UI Alpine plugin. Register it once: import Alpine from 'alpinejs'; import CruxUI from 'crux-ui'; Alpine.plugin(CruxUI); Alpine.start()",
+    "files": [
+        {
+            "path": "views/components/ui/collapsible.blade.php",
+            "type": "registry:file",
+            "target": "resources/views/components/ui/collapsible.blade.php",
+            "content": "<div x-data x-collapsible data-slot=\"collapsible\" {{ $attributes }}>\n    {{ $slot }}\n</div>\n"
+        },
+        {
+            "path": "views/components/ui/collapsible-trigger.blade.php",
+            "type": "registry:file",
+            "target": "resources/views/components/ui/collapsible-trigger.blade.php",
+            "content": "<button type=\"button\" x-collapsible:trigger data-slot=\"collapsible-trigger\" {{ $attributes }}>\n    {{ $slot }}\n</button>\n"
+        },
+        {
+            "path": "views/components/ui/collapsible-panel.blade.php",
+            "type": "registry:file",
+            "target": "resources/views/components/ui/collapsible-panel.blade.php",
+            "content": "{{-- Server-renders the native hidden attribute so a closed panel cannot flash open before Alpine starts; the primitive takes it over on init. Pass :hidden=\"false\" when the root has default-open, or hidden=\"until-found\" when it has hidden-until-found. --}}\n@props(['hidden' => true])\n\n<div\n    x-collapsible:panel\n    data-slot=\"collapsible-panel\"\n    @if ($hidden === 'until-found') hidden=\"until-found\" @elseif ($hidden) hidden @endif\n    {{ $attributes }}\n>\n    {{ $slot }}\n</div>\n"
+        }
+    ]
+}

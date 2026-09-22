@@ -1,0 +1,55 @@
+{
+    "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+    "name": "card",
+    "type": "registry:item",
+    "title": "Card",
+    "description": "A card with header, title, description, action, content, and footer parts.",
+    "dependencies": [],
+    "registryDependencies": [
+        "@crux/theme"
+    ],
+    "files": [
+        {
+            "path": "views/components/ui/card.blade.php",
+            "type": "registry:file",
+            "target": "resources/views/components/ui/card.blade.php",
+            "content": "@props(['size' => null])\n\n<div\n    data-slot=\"card\"\n    {{ $attributes->merge(['data-size' => $size])->class('group/card flex flex-col gap-(--card-spacing) overflow-hidden rounded-xl bg-card py-(--card-spacing) text-sm text-card-foreground ring-1 ring-foreground/10 [--card-spacing:--spacing(4)] has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0 data-[size=sm]:[--card-spacing:--spacing(3)] data-[size=sm]:has-data-[slot=card-footer]:pb-0 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl') }}\n>\n    {{ $slot }}\n</div>\n"
+        },
+        {
+            "path": "views/components/ui/card-header.blade.php",
+            "type": "registry:file",
+            "target": "resources/views/components/ui/card-header.blade.php",
+            "content": "<div\n    data-slot=\"card-header\"\n    {{ $attributes->class('group/card-header @container/card-header grid auto-rows-min items-start gap-1 rounded-t-xl px-(--card-spacing) has-data-[slot=card-action]:grid-cols-[1fr_auto] has-data-[slot=card-description]:grid-rows-[auto_auto] [.border-b]:pb-(--card-spacing)') }}\n>\n    {{ $slot }}\n</div>\n"
+        },
+        {
+            "path": "views/components/ui/card-title.blade.php",
+            "type": "registry:file",
+            "target": "resources/views/components/ui/card-title.blade.php",
+            "content": "<div\n    data-slot=\"card-title\"\n    {{ $attributes->class('cn-font-heading text-base leading-snug font-medium group-data-[size=sm]/card:text-sm') }}\n>\n    {{ $slot }}\n</div>\n"
+        },
+        {
+            "path": "views/components/ui/card-description.blade.php",
+            "type": "registry:file",
+            "target": "resources/views/components/ui/card-description.blade.php",
+            "content": "<div data-slot=\"card-description\" {{ $attributes->class('text-sm text-muted-foreground') }}>\n    {{ $slot }}\n</div>\n"
+        },
+        {
+            "path": "views/components/ui/card-action.blade.php",
+            "type": "registry:file",
+            "target": "resources/views/components/ui/card-action.blade.php",
+            "content": "<div\n    data-slot=\"card-action\"\n    {{ $attributes->class('col-start-2 row-span-2 row-start-1 self-start justify-self-end') }}\n>\n    {{ $slot }}\n</div>\n"
+        },
+        {
+            "path": "views/components/ui/card-content.blade.php",
+            "type": "registry:file",
+            "target": "resources/views/components/ui/card-content.blade.php",
+            "content": "<div data-slot=\"card-content\" {{ $attributes->class('px-(--card-spacing)') }}>\n    {{ $slot }}\n</div>\n"
+        },
+        {
+            "path": "views/components/ui/card-footer.blade.php",
+            "type": "registry:file",
+            "target": "resources/views/components/ui/card-footer.blade.php",
+            "content": "<div\n    data-slot=\"card-footer\"\n    {{ $attributes->class('flex items-center rounded-b-xl border-t bg-muted/50 p-(--card-spacing)') }}\n>\n    {{ $slot }}\n</div>\n"
+        }
+    ]
+}
