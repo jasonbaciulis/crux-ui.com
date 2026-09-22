@@ -26,7 +26,7 @@ Alpine.start();
 ## 2. Install the registry CLI
 
 ```bash
-composer require crux-ui/laravel --dev
+composer require crux-ui/statamic --dev
 ```
 
 ## 3. Add the theme and a component
