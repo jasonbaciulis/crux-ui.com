@@ -3,6 +3,7 @@
 /public/build
 /public/hot
 /public/storage
+/resources/svg/lucide
 /storage/*.key
 /storage/pail
 /vendor

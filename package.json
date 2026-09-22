@@ -5,7 +5,8 @@
         "build": "vp build",
         "dev": "vp dev",
         "lint": "NODE_OPTIONS='--experimental-strip-types' vp fmt resources/",
-        "test:lint": "NODE_OPTIONS='--experimental-strip-types' vp fmt --check resources/"
+        "test:lint": "NODE_OPTIONS='--experimental-strip-types' vp fmt --check resources/",
+        "icons:lucide": "rm -rf resources/svg/lucide && mkdir -p resources/svg/lucide && cp -R node_modules/lucide-static/icons/. resources/svg/lucide"
     },
     "devDependencies": {
         "@tailwindcss/vite": "^4.3.3",
@@ -23,6 +24,7 @@
     "dependencies": {
         "@alpinejs/collapse": "^3.17.4",
         "alpinejs": "^3.17.4",
-        "crux-ui": "^0.0.1"
+        "crux-ui": "^0.0.1",
+        "lucide-static": "^1.47.0"
     }
 }
