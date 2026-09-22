@@ -29,7 +29,7 @@ afterEach(function (): void {
 
 it('builds every blade item from the component tree', function (): void {
     $this->artisan('crux:registry-build', ['--output' => $this->output])
-        ->expectsOutputToContain('blade: built theme, button, card, collapsible')
+        ->expectsOutputToContain('blade: built theme, button, collapsible')
         ->assertSuccessful();
 
     $collapsible = readRegistryJson($this->output.'/blade/collapsible.json');
@@ -55,7 +55,7 @@ it('writes an index that lists items without file contents', function (): void {
     $names = array_column($index['items'], 'name');
 
     expect($index['name'])->toBe('crux')
-        ->and($names)->toBe(['theme', 'button', 'card', 'collapsible'])
+        ->and($names)->toBe(['theme', 'button', 'collapsible'])
         ->and($index['items'][0]['files'][0])->toBe([
             'path' => 'css/theme.css',
             'type' => 'registry:file',
@@ -66,7 +66,7 @@ it('writes an index that lists items without file contents', function (): void {
 
 it('builds the antlers stack from its own tree with the install target unprefixed', function (): void {
     $this->artisan('crux:registry-build', ['--output' => $this->output])
-        ->expectsOutputToContain('antlers: built theme, button, card, collapsible')
+        ->expectsOutputToContain('antlers: built theme, button, collapsible')
         ->assertSuccessful();
 
     $button = readRegistryJson($this->output.'/antlers/button.json');

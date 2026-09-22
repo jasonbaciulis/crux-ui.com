@@ -18,6 +18,7 @@
     <source>
         <include>
             <directory>app</directory>
+            <directory>packages/crux-ui-statamic/src</directory>
         </include>
     </source>
     <php>

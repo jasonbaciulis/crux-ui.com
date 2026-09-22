@@ -31,21 +31,6 @@ final class Catalog
                 registryDependencies: ['theme'],
             ),
             new RegistryItem(
-                name: 'card',
-                title: 'Card',
-                description: 'A card with header, title, description, action, content, and footer parts.',
-                files: [
-                    $stack->componentFile('card'),
-                    $stack->componentFile('card-header'),
-                    $stack->componentFile('card-title'),
-                    $stack->componentFile('card-description'),
-                    $stack->componentFile('card-action'),
-                    $stack->componentFile('card-content'),
-                    $stack->componentFile('card-footer'),
-                ],
-                registryDependencies: ['theme'],
-            ),
-            new RegistryItem(
                 name: 'collapsible',
                 title: 'Collapsible',
                 description: 'A panel controlled by a button.',

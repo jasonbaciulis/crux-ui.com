@@ -18,3 +18,10 @@ it('loads the Vite bundle that boots Alpine', function (): void {
         ->assertOk()
         ->assertSee('build/assets/app-', false);
 });
+
+it('shows the antlers demo source as a code tab', function (): void {
+    $this->get('/docs/components/collapsible')
+        ->assertOk()
+        ->assertSee('partial:components/ui/collapsible', false)
+        ->assertSee('>Antlers<', false);
+});

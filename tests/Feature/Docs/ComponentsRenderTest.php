@@ -36,11 +36,6 @@ it('lets a submit button override the default type', function (): void {
     expect(Blade::render('<x-ui.button type="submit">Save</x-ui.button>'))->toContain('type="submit"');
 });
 
-it('exposes the card size as a data attribute only when set', function (): void {
-    expect(Blade::render('<x-ui.card size="sm">A</x-ui.card>'))->toContain('data-size="sm"')
-        ->and(Blade::render('<x-ui.card>A</x-ui.card>'))->not->toContain('data-size');
-});
-
 it('server-renders the collapsible panel hidden state', function (): void {
     expect(Blade::render('<x-ui.collapsible-panel>A</x-ui.collapsible-panel>'))->toContain(' hidden')
         ->and(Blade::render('<x-ui.collapsible-panel :hidden="false">A</x-ui.collapsible-panel>'))->not->toContain('hidden')

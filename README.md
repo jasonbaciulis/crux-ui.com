@@ -1,98 +1,78 @@
-- Blade (this project) version: **[github.com/nunomaduro/laravel-starter-kit](https://github.com/nunomaduro/laravel-starter-kit)**
-- Inertia & React version: **[github.com/nunomaduro/laravel-starter-kit-inertia-react](https://github.com/nunomaduro/laravel-starter-kit-inertia-react)**
-- Inertia & Vue version: **[github.com/nunomaduro/laravel-starter-kit-inertia-vue](https://github.com/nunomaduro/laravel-starter-kit-inertia-vue)**
+# crux-ui.com
 
+The documentation site and component registry for [Crux UI](https://github.com/jasonbaciulis/crux-ui): headless, accessible Alpine.js primitives plus copy-and-own styled components for Blade and Antlers.
 
-<p align="center">
-    <a href="https://youtu.be/VhzP0XWGTC4" target="_blank">
-        <img src="/art/banner.png" alt="Overview Laravel Starter Kit" style="width:70%;">
-    </a>
-</p>
+This repository is **not** the `crux-ui` npm package. It is the Laravel application that:
 
-<p>
-    <a href="https://github.com/nunomaduro/laravel-starter-kit/actions"><img src="https://github.com/nunomaduro/laravel-starter-kit/actions/workflows/tests.yml/badge.svg" alt="Build Status"></a>
-    <a href="https://packagist.org/packages/nunomaduro/laravel-starter-kit"><img src="https://img.shields.io/packagist/dt/nunomaduro/laravel-starter-kit" alt="Total Downloads"></a>
-    <a href="https://packagist.org/packages/nunomaduro/laravel-starter-kit"><img src="https://img.shields.io/packagist/v/nunomaduro/laravel-starter-kit" alt="Latest Stable Version"></a>
-    <a href="https://packagist.org/packages/nunomaduro/laravel-starter-kit"><img src="https://img.shields.io/packagist/l/nunomaduro/laravel-starter-kit" alt="License"></a>
-</p>
+- Serves the docs at `/docs` using [Laradocs](https://github.com/petebishwhip/laradocs), with live component demos rendered from Blade.
+- Holds the source of every styled component under `resources/views/components/ui/`.
+- Compiles those components into a shadcn-shaped JSON registry under `public/r/`, which the `crux:add` command (from the `crux-ui/statamic` package) and the shadcn CLI install from.
 
-**Laravel Starter Kit** is an ultra-strict, type-safe [Laravel](https://laravel.com) skeleton engineered for developers who refuse to compromise on code quality. This opinionated starter kit enforces rigorous development standards through meticulous tooling configuration and architectural decisions that prioritize type safety, immutability, and fail-fast principles.
+## How the pieces fit
 
-## Why This Starter Kit?
+| Piece | Where it lives | What it does |
+| --- | --- | --- |
+| Primitives | `crux-ui` on npm | Alpine plugin exposing `x-collapsible`, etc. Handles ARIA, keyboard and focus. |
+| Components | `resources/views/components/ui/` | Styled Blade components (`<x-ui.button>`, `<x-ui.card>`, ...) that use the primitives and the shadcn CSS variables. |
+| Theme | `resources/css/theme.css` | The shadcn CSS variables every component reads. Published as the `theme` registry item. |
+| Registry | `public/r/{blade,antlers}/*.json` | Generated output. Each item carries its files inline so a CLI can copy them into a project. |
+| Docs | `docs/*.md` | Markdown pages with front-matter, served by Laradocs. |
+| Demos | `resources/views/demos/*.blade.php` | Blade snippets rendered inside docs pages via the `<x-demo>` macro. |
 
-Modern PHP has evolved into a mature, type-safe language, yet many Laravel projects still operate with loose conventions and optional typing. This starter kit changes that paradigm by enforcing:
+## Requirements
 
-- **100% Type Coverage**: Every method, property, and parameter is explicitly typed
-- **Zero Tolerance for Code Smells**: Rector and PHPStan at maximum strictness catch issues before they become bugs
-- **Immutable-First Architecture**: Data structures favor immutability to prevent unexpected mutations
-- **Fail-Fast Philosophy**: Errors are caught at compile-time, not runtime
-- **Automated Code Quality**: Pre-configured tools ensure consistent, pristine code across your entire team
-- **Bun-Powered**: Leveraging Bun for blazing-fast dependency management...
-- **Just Better Laravel Defaults**: Thanks to **[Essentials](https://github.com/nunomaduro/essentials)** / strict models, auto eager loading, immutable dates, and more...
+- PHP 8.5+
+- [Bun](https://bun.sh)
+- A coverage driver such as [Xdebug](https://xdebug.org) for `composer test`
 
-This isn't just another Laravel boilerplate—it's a statement that PHP applications can and should be built with the same rigor as strongly-typed languages like Rust or TypeScript.
-
-## Getting Started
-
-> **Requires [PHP 8.4+](https://php.net/releases/)**, [Bun](https://bun.sh) and a code coverage driver like [xdebug](https://xdebug.org/docs/install)**.
-
-Create your type-safe Laravel application using [Composer](https://getcomposer.org):
+## Getting started
 
 ```bash
-composer create-project nunomaduro/laravel-starter-kit --prefer-dist example-app
+composer setup   # composer install, .env, key, migrate, bun install, bun run build
+composer dev     # php artisan serve + queue + pail + vite, concurrently
 ```
 
-### Initial Setup
+The docs are then available at `http://localhost:8000/docs`.
 
-Navigate to your project and complete the setup:
+## Building the registry
 
 ```bash
-cd example-app
-
-# Setup project
-composer setup
-
-# Start the development server
-composer dev
+php artisan crux:registry-build
 ```
 
-### Optional: Browser Testing Setup
+This reads the catalog in `app/Registry/Catalog.php` and writes, for each stack, one JSON file per item plus a `registry.json` index into `public/r/<stack>/`. Pass `--output=<dir>` to write elsewhere.
 
-If you plan to use Pest's browser testing capabilities:
+The output follows the [shadcn registry schema](https://ui.shadcn.com/schema/registry-item.json). Item names are namespaced as `@crux/<name>`, and `registryDependencies` point at other items (every component depends on `theme`).
 
-```bash
-bun add playwright
-bunx playwright install
-```
+Every catalog item must have a source file for every stack. A missing source fails the build.
 
-### Verify Installation
+## Adding a component
 
-Run the test suite to ensure everything is configured correctly:
+1. Create the Blade files in `resources/views/components/ui/`. Multi-part components use one file per part, for example `card.blade.php` and `card-header.blade.php`.
+2. Register the item in `app/Registry/Catalog.php`. List the npm dependencies it needs (usually `crux-ui`) and the registry items it depends on (usually `theme`).
+3. Add a demo in `resources/views/demos/<name>.blade.php`.
+4. Create the docs page with `php artisan make:doc components/<name>` and use `<x-demo name="<name>" />` and `<x-demo-source name="<name>" />` to render the live demo and its source.
+5. Run `php artisan crux:registry-build` and commit the generated JSON in `public/r/`.
+6. Add or update the tests under `tests/Feature/Docs/` and `tests/Feature/Registry/`.
 
-```bash
-composer test
-```
+## Writing docs
 
-You should see 100% test coverage and all quality checks passing.
+Pages live in `docs/` and each needs a `title` in its front-matter. Folders become navigation sections and URL segments, so `docs/components/collapsible.md` is served at `/docs/components/collapsible`.
 
-## Available Tooling
+Two Laradocs macros are registered in `config/laradocs.php`:
 
-### Development
-- `composer dev` - Starts Laravel server, queue worker, log monitoring, and Vite+ dev server concurrently
+- `<x-demo name="collapsible" />` renders the demo Blade view inside a preview frame.
+- `<x-demo-source name="collapsible" />` emits that view's source as a code tab, so the docs cannot drift from the demo.
 
-### Code Quality
-- `composer lint` - Runs Rector (refactoring), Pint (PHP formatting), and Oxfmt (JS/TS formatting)
-- `composer test:lint` - Dry-run mode for CI/CD pipelines
+Run `php artisan docs:lint` before committing, and `php artisan laradocs:clear` after changing Laradocs config or macros.
 
-### Testing
-- `composer test:type-coverage` - Ensures 100% type coverage with Pest
-- `composer test:types` - Runs PHPStan at level 9 (maximum strictness)
-- `composer test:unit` - Runs Pest tests with 100% code coverage requirement
-- `composer test` - Runs the complete test suite (type coverage, unit tests, linting, static analysis)
+## Tooling
 
-### Maintenance
-- `composer update:requirements` - Updates all PHP and Bun dependencies to latest versions
+- `composer lint` runs Rector, Pint and the Vite+ formatter.
+- `composer test` runs 100% type coverage, Pest with 100% code coverage, lint checks and PHPStan at max level.
+- `composer test:unit`, `composer test:types`, `composer test:lint` and `composer test:type-coverage` run each step alone.
+- `php artisan test --compact --filter=<name>` runs a single test.
 
 ## License
 
-**Laravel Starter Kit** was created by **[Nuno Maduro](https://x.com/enunomaduro)** under the **[MIT license](https://opensource.org/licenses/MIT)**.
+MIT.

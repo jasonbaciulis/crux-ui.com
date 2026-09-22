@@ -1,0 +1,35 @@
+{
+    "name": "crux-ui/statamic",
+    "description": "Installs Crux UI registry components into a Statamic or Laravel project: php artisan crux:add button",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "statamic",
+        "laravel",
+        "alpinejs",
+        "crux-ui",
+        "shadcn"
+    ],
+    "homepage": "https://crux-ui.com",
+    "require": {
+        "php": "^8.4",
+        "illuminate/console": "^12.0|^13.0",
+        "illuminate/filesystem": "^12.0|^13.0",
+        "illuminate/http": "^12.0|^13.0",
+        "illuminate/support": "^12.0|^13.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "CruxUI\\Statamic\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "CruxUI\\Statamic\\CruxServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
